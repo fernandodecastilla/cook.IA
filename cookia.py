@@ -83,10 +83,10 @@ st.write('')
 if st.button('🍽️ Quiero mi menú! 😋'):
     # Carga de datos
     df = pd.read_pickle('./data/df.pkl')
-    df_ingrs = pd.read_pickle('./data/df_ingrs.pkl')
-    df_ingrs_relevance = pd.read_pickle('./data/df_ingrs_relevance.pkl')
-    similarity = np.load('./data/similarity.dat', allow_pickle=True)
-    topN_matrix = pd.read_pickle('./data/topN_matrix.dat')
+    #df_ingrs = pd.read_pickle('./data/df_ingrs.pkl')
+    #df_ingrs_relevance = pd.read_pickle('./data/df_ingrs_relevance.pkl')
+    #similarity = np.load('./data/similarity.dat', allow_pickle=True)
+    #topN_matrix = pd.read_pickle('./data/topN_matrix.dat')
 
     # Preparación de filtros
     slider_kcal_int = [float(x) for x in slider_kcal]
