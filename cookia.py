@@ -255,7 +255,7 @@ st.session_state.firebaseConfig = {
 }
 
 # Mi web: https://buymeacoffee.com/cookia
-st.session_state.coffee = '<a href="https://www.buymeacoffee.com/cookia"><img src="https://img.buymeacoffee.com/button-api/?text=Invítanos a una tapa&emoji=🍤&slug=cookia&button_colour=1e90ff&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"></a>'
+st.session_state.coffee = '<a href="https://www.buymeacoffee.com/cookia" target="_blank"><img src="https://img.buymeacoffee.com/button-api/?text=Invítanos a una tapa&emoji=🍤&slug=cookia&button_colour=1e90ff&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"></a>'
 
 # Inicio de la página
 cols_coffee = st.columns(3)
