@@ -37,7 +37,7 @@ def main_cookia():
     form_main.write('')
     form_main.write('')
     form_main.write('')
-    expander_sibarita = form_main.expander('Sólo para sibaritas de la planificación que no quieren dejar el más mínimo detalle al azar... 👇🏻')
+    expander_sibarita = form_main.expander('Sólo para sibaritas de la planificación que no quieren dejar el más mínimo detalle al azar... 👉🏻 (pulsando el símbolo \'\+\')')
     if expander_sibarita:
         slider_val = expander_sibarita.slider('Valoración mínima', 0.0, 5.0, 3.5, 0.5)
 
@@ -133,7 +133,7 @@ def main_cookia():
             form_main.balloons()
 
             cols_botones = st.columns(3)
-            fichero_descarga = '<h1>Planificación semanal:</h1><br>' + planner.to_html(escape=False) + lista_de_la_compra
+            fichero_descarga = '<h1>Resultado del planificador semanal:</h1><br>' + planner.to_html(escape=False) + lista_de_la_compra
             cols_botones[1].download_button(label="Descarga esta planificación y la lista de la compra", data=fichero_descarga, file_name='cookia_planificación.html')
         else:
             form_main.error('Me temo que has sido muy estricto conmigo... No puedo ofrecerte ningún menú semanal. ' +
@@ -210,7 +210,7 @@ def sidebar_options():
         email = form_signup.text_input('Correo electrónico')
         password = form_signup.text_input('Contraseña', type = 'password')
         password2 = form_signup.text_input(' Repetir contraseña', type = 'password')
-        username = form_signup.text_input('Escoge un nombre de usuario')
+        username = form_signup.text_input('Hola, soy cookia, ¿cuál es tu nombre?')
         if form_signup.form_submit_button('Registrarse'):
             import re
             #if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
@@ -254,6 +254,15 @@ st.session_state.firebaseConfig = {
     'measurementId': st.secrets['measurementId']
 }
 
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 # Mi web: https://buymeacoffee.com/cookia
 st.session_state.coffee = '<a href="https://www.buymeacoffee.com/cookia" target="_blank"><img src="https://img.buymeacoffee.com/button-api/?text=Invítanos a una tapa&emoji=🍤&slug=cookia&button_colour=1e90ff&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"></a>'
 
@@ -266,7 +275,8 @@ cols_logo[0].image('.streamlit/logo.png')
 st.header('Tu Planificador Inteligente e Interactivo')
 st.markdown('<i>cookia</i> nace con el deseo de aportar un enfoque innovador a la hora de planificar tu próximo plato entre miles de recetas <i>Thermomix</i>. ' + 
             'Encuentra de forma eficaz los menús más apropiados al rango de calorías que desees, añade alguna etiqueta entre más de un centenar, filtra por popularidad o tiempo de elaboración... ' + 
-            '<br><br>Explora la variedad de recetas disponibles e invítanos a una tapa en el botón de arriba 👆 para poder comentarnos qué nuevas funcionalidades te gustaría que añadamos próximamente!', unsafe_allow_html=True)
+            '<br><br>Explora la variedad de recetas disponibles e invítanos a una tapa en el botón de arriba 👆🏻 para poder comentarnos qué nuevas funcionalidades te gustaría que añadamos próximamente!', unsafe_allow_html=True)
+st.markdown('👈🏻 <i>Pulsa la flecha arriba a la izquierda y se desplegará el panel para registrarte/iniciar sesión.</i>', unsafe_allow_html=True)
 
 choice_container = st.sidebar.empty()
 form_login_container = st.sidebar.empty()
