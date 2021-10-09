@@ -244,15 +244,15 @@ def sidebar_options():
 
 # Configuration Key
 st.session_state.firebaseConfig = {
-    'apiKey': "AIzaSyAFjXxU8EbJ7EWJ81xpQILe0XfHAjh_s9g",
-    'authDomain': "cookia-b704c.firebaseapp.com",
-    'projectId': "cookia-b704c",
-    'databaseURL':"https://cookia-b704c-default-rtdb.europe-west1.firebasedatabase.app/",
-    'storageBucket': "cookia-b704c.appspot.com",
-    'messagingSenderId': "462202893352",
-    'appId': "1:462202893352:web:8f08adf5663de713a5b11d",
-    'measurementId': "G-ZD7JF0ERPG"
-  }
+    'apiKey': st.secrets['apiKey'],
+    'authDomain': st.secrets['authDomain'],
+    'projectId': st.secrets['projectId'],
+    'databaseURL': st.secrets['databaseURL'],
+    'storageBucket': st.secrets['storageBucket'],
+    'messagingSenderId': st.secrets['messagingSenderId'],
+    'appId': st.secrets['appId'],
+    'measurementId': st.secrets['measurementId']
+}
 
 # Mi web: https://buymeacoffee.com/cookia
 st.session_state.coffee = '<a href="https://www.buymeacoffee.com/cookia"><img src="https://img.buymeacoffee.com/button-api/?text=Invítanos a una tapa&emoji=🍤&slug=cookia&button_colour=1e90ff&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"></a>'
