@@ -294,7 +294,7 @@ if st.session_state.auth.current_user is not None:
         st.session_state.auth.current_user = None
         form_main_container.empty()
         choice = choice_container.radio('Elige una de las siguientes opciones:', ['', 'Iniciar sesión', 'Registrarse', 'Olvidé mi contraseña'], key='choices2')
-        from streamlit import caching
-        caching.clear_cache()
+        #from streamlit import caching
+        #caching.clear_cache()
         st.sidebar.success('Has cerrado sesión correctamente. Esperamos verte pronto, hasta la próxima!')
         form_logout_container.empty()
