@@ -37,7 +37,7 @@ def main_cookia():
     form_main.write('')
     form_main.write('')
     form_main.write('')
-    expander_sibarita = form_main.expander('Sólo para sibaritas de la planificación que no quieren dejar el más mínimo detalle al azar... 👉🏻 (pulsando el símbolo \'\+\')')
+    expander_sibarita = form_main.expander('Sólo para sibaritas de la planificación... (pulsa el símbolo \'+\') 👉🏻')
     if expander_sibarita:
         slider_val = expander_sibarita.slider('Valoración mínima', 0.0, 5.0, 3.5, 0.5)
 
