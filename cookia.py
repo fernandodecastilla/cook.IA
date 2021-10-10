@@ -191,6 +191,7 @@ def sidebar_options():
         email = form_login.text_input('Correo electrónico')
         password = form_login.text_input('Contraseña',type = 'password')
         if form_login.form_submit_button('Inicia sesión'):
+            email = email.strip()
             try:
                 st.session_state.user = st.session_state.auth.sign_in_with_email_and_password(email, password)
                 username = st.session_state.db.child(st.session_state.user['localId']).child("username").get().val()
@@ -212,6 +213,7 @@ def sidebar_options():
         password2 = form_signup.text_input(' Repetir contraseña', type = 'password')
         username = form_signup.text_input('Hola, soy cookia, ¿cuál es tu nombre?')
         if form_signup.form_submit_button('Registrarse'):
+            email = email.strip()
             import re
             #if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             if not re.fullmatch(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', email):
@@ -235,6 +237,7 @@ def sidebar_options():
         form_restore = form_restore_container.form("form_restore_key", clear_on_submit=True)
         email = form_restore.text_input('Correo electrónico')
         if form_restore.form_submit_button('Envíame un email'):
+            email = email.strip()
             try:
                 if st.session_state.auth.send_password_reset_email(email):
                     popup_container.info('Listo! Te hemos enviado un correo para restaurar tu contraseña')
@@ -302,7 +305,7 @@ if st.session_state.auth.current_user is not None:
     if form_logout.form_submit_button('Cerrar sesión'):
         st.session_state.auth.current_user = None
         form_main_container.empty()
-        choice = choice_container.radio('Elige una de las siguientes opciones:', ['Iniciar sesión', 'Registrarse', 'Olvidé mi contraseña'], key='choices2')
+        choice = choice_container.radio('Elige una de las siguientes opciones:', ['', 'Iniciar sesión', 'Registrarse', 'Olvidé mi contraseña'], 0, key='choices2')
         #from streamlit import caching
         #caching.clear_cache()
         popup_container.success('Has cerrado sesión correctamente. Esperamos verte pronto, hasta la próxima!')
