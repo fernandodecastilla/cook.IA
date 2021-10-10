@@ -198,13 +198,13 @@ def sidebar_options():
                 if not st.session_state.user_info['users'][0]['emailVerified']:
                     #user = auth.refresh(user['refreshToken'])
                     st.session_state.auth.send_email_verification(st.session_state.user['idToken'])
-                    st.sidebar.success('Hola de nuevo, ' + username +
+                    popup_container.success('Hola de nuevo, ' + username +
                                         '! Te hemos reenviado el correo para que puedas verificar tu cuenta ' + 
                                         '(recuerda revisar tu bandeja de spam o correo no deseado)')
                 else:
-                    st.sidebar.info('Bienvenido/a, ' + username + ', a la familia!')
+                    popup_container.info('Bienvenido/a, ' + username + ', a la familia!')
             except:
-                st.sidebar.error('Ups! Ha habido un problema al iniciar sesión')
+                popup_container.error('Ups! Ha habido un problema con el correo eléctrónico y/o la contraseña al iniciar sesión')
     elif choice == 'Registrarse':
         form_signup = form_signup_container.form("form_signup_key", clear_on_submit=True)
         email = form_signup.text_input('Correo electrónico')
@@ -215,11 +215,11 @@ def sidebar_options():
             import re
             #if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             if not re.fullmatch(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', email):
-                st.sidebar.error('La dirección de correo electrónico no es válida. Por favor, corrígela')
+                popup_container.error('La dirección de correo electrónico no es válida. Por favor, corrígela')
             elif username == '':
-                st.sidebar.error('Has dejado vacío el nombre de usuario. Adelante, no seas tímid@!')
+                popup_container.error('Has dejado vacío el nombre de usuario. Adelante, no seas tímid@!')
             elif password != password2:
-                st.sidebar.error('Las contraseñas que has introducido no coinciden. Corrígelas, por favor')
+                popup_container.error('Las contraseñas que has introducido no coinciden. Corrígelas, por favor')
             else:
                 try:
                     st.session_state.user = st.session_state.auth.create_user_with_email_and_password(email, password)
@@ -227,20 +227,19 @@ def sidebar_options():
                         st.session_state.auth.send_email_verification(st.session_state.user['idToken'])
                         st.session_state.db.child(st.session_state.user['localId']).child("username").set(username)
                         st.session_state.db.child(st.session_state.user['localId']).child("ID").set(st.session_state.user['localId'])
-                        st.sidebar.success('Estupendo, ' + username + '! Te hemos enviado un correo para que puedas completar tu registro ' + 
+                        popup_container.success('Estupendo, ' + username + '! Te hemos enviado un correo para que puedas completar tu registro ' + 
                                                                         '(recuerda revisar tu bandeja de spam o correo no deseado)')
-                        st.sidebar.balloons()
                 except:
-                    st.sidebar.error('Ups! Ha habido un problema al registrar tu cuenta')
+                    popup_container.error('Ups! Ha habido un problema al registrar tu cuenta')
     elif choice == 'Olvidé mi contraseña':
         form_restore = form_restore_container.form("form_restore_key", clear_on_submit=True)
         email = form_restore.text_input('Correo electrónico')
         if form_restore.form_submit_button('Envíame un email'):
             try:
                 if st.session_state.auth.send_password_reset_email(email):
-                    st.sidebar.info('Listo! Te hemos enviado un correo para restaurar tu contraseña')
+                    popup_container.info('Listo! Te hemos enviado un correo para restaurar tu contraseña')
             except:
-                st.sidebar.error('Ups! Ha habido un problema al restaurar la contraseña. Por favor, inténtalo de nuevo')
+                popup_container.error('Ups! Ha habido un problema al restaurar la contraseña. Por favor, inténtalo de nuevo')
 
 # Configuration Key
 st.session_state.firebaseConfig = {
@@ -275,14 +274,14 @@ cols_logo[0].image('.streamlit/logo.png')
 st.header('Tu Planificador Inteligente e Interactivo')
 st.markdown('<i>cookia</i> nace con el deseo de aportar un enfoque innovador a la hora de planificar tu próximo plato entre miles de recetas <i>Thermomix</i>. ' + 
             'Encuentra de forma eficaz los menús más apropiados al rango de calorías que desees, añade alguna etiqueta entre más de un centenar, filtra por popularidad o tiempo de elaboración... ' + 
-            '<br><br>Explora la variedad de recetas disponibles e invítanos a una tapa en el botón de arriba 👆🏻 para poder comentarnos qué nuevas funcionalidades te gustaría que añadamos próximamente!', unsafe_allow_html=True)
-st.markdown('👈🏻 <i>Pulsa la flecha arriba a la izquierda y se desplegará el panel para registrarte/iniciar sesión.</i>', unsafe_allow_html=True)
+            '<br><br>Explora la variedad de recetas disponibles e invítanos a una tapa en el botón de arriba 👆🏻 para poder comentarnos qué nuevas funcionalidades te gustaría que añadamos próximamente!<br><br>', unsafe_allow_html=True)
 
-choice_container = st.sidebar.empty()
-form_login_container = st.sidebar.empty()
-form_signup_container = st.sidebar.empty()
-form_restore_container = st.sidebar.empty()
-form_logout_container = st.sidebar.empty()
+choice_container = st.empty()
+form_login_container = st.empty()
+form_signup_container = st.empty()
+form_restore_container = st.empty()
+form_logout_container = st.empty()
+popup_container = st.empty()
 form_main_container = st.empty()
 
 # Firebase Authentication and database instance
@@ -292,7 +291,7 @@ if 'firebase' not in st.session_state:
     st.session_state.db = st.session_state.firebase.database()
 
 #if st.session_state.auth.current_user is None:
-choice = choice_container.radio('Elige una de las siguientes opciones:', ['', 'Iniciar sesión', 'Registrarse', 'Olvidé mi contraseña'], key='choices')
+choice = choice_container.radio('Elige una de las siguientes opciones:', ['Iniciar sesión', 'Registrarse', 'Olvidé mi contraseña'], key='choices')
 sidebar_options()
 
 if st.session_state.auth.current_user is not None:
@@ -303,8 +302,8 @@ if st.session_state.auth.current_user is not None:
     if form_logout.form_submit_button('Cerrar sesión'):
         st.session_state.auth.current_user = None
         form_main_container.empty()
-        choice = choice_container.radio('Elige una de las siguientes opciones:', ['', 'Iniciar sesión', 'Registrarse', 'Olvidé mi contraseña'], key='choices2')
+        choice = choice_container.radio('Elige una de las siguientes opciones:', ['Iniciar sesión', 'Registrarse', 'Olvidé mi contraseña'], key='choices2')
         #from streamlit import caching
         #caching.clear_cache()
-        st.sidebar.success('Has cerrado sesión correctamente. Esperamos verte pronto, hasta la próxima!')
+        popup_container.success('Has cerrado sesión correctamente. Esperamos verte pronto, hasta la próxima!')
         form_logout_container.empty()
